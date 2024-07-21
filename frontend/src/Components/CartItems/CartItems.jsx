@@ -15,10 +15,10 @@ import remove_icon from '../Assets/cart_cross_icon.png';
             <p>Remove</p>
         </div>
         <hr/>
-      {all_product.map((e)=>{
+      {all_product.map((e,index)=>{
         if(cartItems[e.id]>0){
             return   <div>
-            <div className="cartitems-format cartitems-format-main">
+            <div key={index} className="cartitems-format cartitems-format-main">
                 <img src={e.image} alt="" className="carticon-product-icon" />
                 <p>{e.name}</p>
                 <p>${e.new_price}</p>
