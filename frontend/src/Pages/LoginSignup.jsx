@@ -23,7 +23,7 @@ const LoginSignup=()=>{
          body:JSON.stringify(formData),
       }).then((response)=>response.json()).then((data)=>responseData=data)
       if(responseData.success){
-         localStorage.setItem('auto-token',responseData.token);
+         localStorage.setItem('auth-token',responseData.token);
          window.location.replace("/");
       }
       else{
@@ -42,7 +42,7 @@ const LoginSignup=()=>{
          body:JSON.stringify(formData),
       }).then((response)=>response.json()).then((data)=>responseData=data)
       if(responseData.success){
-         localStorage.setItem('auto-token',responseData.token);
+         localStorage.setItem('auth-token',responseData.token);
          window.location.replace("/");
       }
       else{
@@ -54,12 +54,13 @@ const LoginSignup=()=>{
       <div className="loginsignup-container">
          <h1>{state}</h1>
          <div className="loginsignup-fields">
-            {state==="Login"?<></>:<input type="text" placeholder="Your name.." name="username" value={formData.username} onChange={changeHandle} />}
+            {state==="Sign Up"?<input type="text" placeholder="Your name.." name="username" value={formData.username} onChange={changeHandle} />
+            :<></>}
             <input name="email" value={formData.email} onChange={changeHandle} type="email" placeholder="Email Address.."/>
             <input name="password" value={formData.password} onChange={changeHandle} type="password" placeholder="Password"/>
 
          </div>
-         <button onClick={()=>{state==="Sign Up"?signup():login()}}>Continue</button>
+         <button onClick={()=>{state==="Login"?login():signup()}}>Continue</button>
          {state==="Sign Up"?<p className="loginsignup-login">
             Already have an account?
             <span onClick={()=>{setState("Login")}}> Login here</span>

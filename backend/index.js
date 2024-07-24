@@ -134,7 +134,7 @@ const Users= mongoose.model('Users',{
     }
 })
 //
-app.post('/signup',async(req,res)=>{
+app.post('/signup',async (req,res)=>{
 
     let check = await Users.findOne({email:req.body.email})
     if(check){
@@ -161,19 +161,19 @@ app.post('/signup',async(req,res)=>{
 
 })
 //
-app.post('/login',async(req,res)=>{
+app.post('/login',async (req,res)=>{
     let user= await Users.findOne({email:req.body.email});
     if(user){
-        const passCompare = req.body.password=== user.password;
+        const passCompare = req.body.password === user.password;
         if(passCompare){
             const data={
                 user:{
                     id: user.id
                 }
             }
-            const token= jwt.sign(data,"secret_com");
+            const token= jwt.sign(data,"secret_ecom");
             res.json({
-                success:true, token
+                success:true,token
             });
         }
         else{
@@ -201,29 +201,44 @@ app.get('/popularinwomen', async(req, res)=>{
 })
 //
 
-    // const fetchUser= async(req,res,next)=>{
-    //     const token= req.header('auto-token');
-    //     if(!token){
-    //         res.status(401).send({errors:"Please authenticate using valid token"})
-    //     }
-    //     else{
-    //         try{
-    //             const data= jwt.verify(token,'secret_ecom');
-    //             req.user= data.user;
-    //             next();
-    //         }catch(error){
-    //             res.status(401).send({errors:"please authenticate using a valid token"})
-    //         }
-    //     }
-    // }
-    //
-    app.post('/addtocart',async(req,res)=>{
-        // let userData= await Users.findOne({_id:req.user.id});
-        // userData.cartData[req.body.itemId]+=1;
-        // await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
-        // res.send("Added")
-        console.log(req.body,req.user);
+    const fetchUser= async (req,res,next)=>{
+        const token= req.header('auth-token');
+        if(!token){
+            return res.status(401).send({errors:"Please authenticate using valid token"})
+        }
+        else{
+            try{
+                const data= jwt.verify(token,'secret_ecom');
+                req.user= data.user;
+                next();
+            }catch(error){
+               return res.status(401).send({errors:"please authenticate using a valid token"})
+            }
+        }
+    }
+    
+    app.post('/addtocart',fetchUser,async (req,res)=>{
+        console.log("Added", req.body.itemId)
+        let userData= await Users.findOne({_id:req.user.id});
+        userData.cartData[req.body.itemId]+=1;
+        await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
+        res.send("Added")
     })
+    //
+    app.post('/removefromcart',fetchUser, async (req,res)=>{
+        console.log("removed", req.body.itemId)
+        let userData= await Users.findOne({_id:req.user.id});
+        if(userData.cartData[req.body.itemId]>0)
+        userData.cartData[req.body.itemId]-=1;
+        await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData});
+        res.send("Removed")
+    })
+//
+ app.post('/getcart',fetchUser, async (req,res)=>{
+    console.log("get cart");
+    let userData = await Users.findOne({_id:req.user.id});
+    res.json(userData.cartData);
+ })
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server running on port " + port)
