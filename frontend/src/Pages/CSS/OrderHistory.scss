@@ -1,0 +1,44 @@
+.container{
+    
+    margin: 30px 170px 80px;
+   
+    .order-history{
+        display: block;
+       .order-history-top{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        color: red;
+        button{
+            padding: 10px 20px;
+            background-color: red;
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+       }
+       table{
+        width: 100%;
+        border: 1px solid #cccc;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        tr{
+           
+            th,td{
+                border: 1px solid #cccc;
+                text-align: center;
+                padding: 15px 0px;
+            }
+            &:last-child{
+                .item-table{
+                    text-align: right;
+                }
+            }
+            
+        }
+     
+        
+       }
+    }
+}

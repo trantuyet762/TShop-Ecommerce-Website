@@ -1,0 +1,46 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  
+  .modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    position: relative;
+    justify-content: flex-end;
+  h4{
+    margin-top: 10px;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    select{
+        option{
+            padding: 10px;
+        }
+    }
+  }
+  .modal-button{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+}
+}

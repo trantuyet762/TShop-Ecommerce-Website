@@ -11,7 +11,6 @@ const { error } = require("console");
 app.use(express.json());
 app.use(cors());
 mongoose.connect("mongodb+srv://tuyet2203:tuyet2203@cluster0.2criioi.mongodb.net/e-commerce");
-
 //tạo api
 
 app.get("/",(req,res)=>{
@@ -113,7 +112,9 @@ app.get('/allproducts',async(req,res)=>{
 
 })
 
+
 //
+
 const Users= mongoose.model('Users',{
     name: {
         type: String,
@@ -199,23 +200,73 @@ app.get('/popularinwomen', async(req, res)=>{
     console.log("Popular in women fetched ");
     res.send(popular_in_women);
 })
+
 //
 
-    const fetchUser= async (req,res,next)=>{
-        const token= req.header('auth-token');
-        if(!token){
-            return res.status(401).send({errors:"Please authenticate using valid token"})
-        }
-        else{
-            try{
-                const data= jwt.verify(token,'secret_ecom');
-                req.user= data.user;
-                next();
-            }catch(error){
-               return res.status(401).send({errors:"please authenticate using a valid token"})
-            }
-        }
+const Order = mongoose.model("Order", {
+    userId: { type: String, required: true },
+    name: { type: String, required: true },
+    phoneNumber: { type: Number, required: true },
+    email: { type: String, required: true },
+    address: { type: String, required: true },
+    paymentMethod: { type: String, required: true },
+    status: { 
+        type: String, 
+        enum: ["Chuẩn bị","Đang giao", "Đã giao"], 
+        default: "Chuẩn bị" 
+    },
+    date: { type: Date, default: Date.now },
+    totalAmount: { type: Number, required: true },
+    products: [{
+        productId: { type: Number, required: true },
+        image: {type: String, required: true },
+        name: { type: String, required: true },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true }
+    }]
+});
+
+//
+const fetchUser = async (req, res, next) => {
+    const token = req.header('auth-token');
+    if (!token) {
+        return res.status(401).json({ errors: "Vui lòng xác thực bằng token hợp lệ" });
     }
+    try {
+        const data = jwt.verify(token, 'secret_ecom');
+        req.user = data.user;
+        next();
+    } catch (error) {
+        return res.status(401).json({ errors: "Vui lòng xác thực bằng token hợp lệ" });
+    }
+};
+
+
+    //
+    app.get('/order-history', fetchUser, async (req, res) => {
+        try {
+            const orders = await Order.find({ userId: req.user.id }).sort({ date: -1 });
+            res.json(orders);
+        } catch (error) {
+            res.status(500).json({ error: 'Lỗi khi lấy lịch sử đơn hàng.' });
+        }
+    });
+    // lấy đơn hàng theo id
+   
+app.get('/order/:id', async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      if (order) {
+        res.json(order);
+      } else {
+        res.status(404).json({ message: 'Order not found' });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
+    //
     
     app.post('/addtocart',fetchUser,async (req,res)=>{
         console.log("Added", req.body.itemId)
@@ -239,6 +290,93 @@ app.get('/popularinwomen', async(req, res)=>{
     let userData = await Users.findOne({_id:req.user.id});
     res.json(userData.cartData);
  })
+
+ //
+ app.post('/order', fetchUser, async (req, res) => {
+    const { name, phoneNumber, email, address, paymentMethod } = req.body;
+    const userData = await Users.findOne({ _id: req.user.id });
+    
+    const cartItems = userData.cartData;
+    let totalAmount = 0;
+    const purchasedProducts = [];
+
+    for (const item in cartItems) {
+        if (cartItems[item] > 0) {
+            let itemInfo = await Product.findOne({ id: Number(item) });
+            if (itemInfo) {
+                totalAmount += itemInfo.new_price * cartItems[item];
+                purchasedProducts.push({
+                    productId: itemInfo.id,
+                    image: itemInfo.image,
+                    name: itemInfo.name,
+                    quantity: cartItems[item],
+                    price: itemInfo.new_price
+                });
+            }
+        }
+    }
+    const order = new Order({
+        userId: req.user.id,
+        
+        name,
+        phoneNumber,
+        email,
+        address,
+        paymentMethod,
+        status: "Chuẩn bị",
+        totalAmount,
+        products: purchasedProducts
+    });
+
+    await order.save();
+    res.json({ success: true, order });
+});
+// lấy danh sách order
+app.get('/order', async (req, res) => {
+    try {
+        const orders = await Order.find({}).sort({ date: -1 });
+        res.json(orders);
+    } catch (error) {
+        res.status(500).json({ error: 'Lỗi khi lấy danh sách đơn hàng.' });
+    }
+});
+//
+app.put('/order/:id', async (req, res) => {
+    try {
+        const { status } = req.body; // Trạng thái mới từ client
+        if (!["Chuẩn bị","Đang giao", "Đã giao"].includes(status)) {
+            return res.status(400).json({ message: 'Trạng thái không hợp lệ.' });
+        }
+
+        // Tìm đơn hàng theo ID
+        const order = await Order.findById(req.params.id);
+        if (order) {
+            order.status = status;
+            await order.save(); 
+            res.json({ success: true, order });
+        } else {
+            res.status(404).json({ message: 'Đơn hàng không tìm thấy' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// xóa đơn hàng
+app.delete('/order/:id',  async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id);
+       
+        await order.remove();
+        res.json({ success: true, message: 'Đơn hàng đã được hủy.' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: `Lỗi: ${error.message}` });
+    }
+});
+
+
+
+//
 app.listen(port,(error)=>{
     if(!error){
         console.log("Server running on port " + port)

@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState } from "react" ;
 import './Navbar.css';
+import { FaUser } from "react-icons/fa";
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
 import { Link } from "react-router-dom";
@@ -37,7 +38,12 @@ const Navbar =()=>{
                 
                 <Link to='/cart'><img src={cart_icon} alt=""/></Link>
                 <div className="nav-cart-count">{getTotalCartItems()}</div>
+                <div className="nav-order">
+                <Link to={'/order-history'}><FaUser/></Link>
+                    
             </div>
+            </div>
+            
         </div>
     )
 }

@@ -1,0 +1,52 @@
+.order-detail{
+    h3{
+        color: #3e3e3e;
+    }
+    margin-left: 70px;
+    margin-right: 70px;
+    width: 100%;
+    .orderdetail-top{
+        margin-bottom: 50px;
+        .row{
+            display: flex;
+            gap: 50px;
+            width: 100%;
+           justify-content: space-between;
+           margin-bottom: 20px;
+           .md-6{
+            width: 50%;
+            label{
+                font-weight: 600;
+               
+            }
+            input{
+                width: 100%;
+                padding: 10px;
+                margin-top: 10px;
+            }
+           }
+        }
+    }
+    table{
+        width: 100%;
+        border: 1px solid #cccc;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        tr{
+           
+            th,td{
+                border: 1px solid #cccc;
+                text-align: center;
+                padding: 15px 0px;
+            }
+            &:last-child{
+                .item-table{
+                    text-align: right;
+                }
+            }
+            
+        }
+     
+        
+       }
+}

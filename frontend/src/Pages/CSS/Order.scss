@@ -1,11 +1,69 @@
 .order{
     display: flex;
     align-items: start;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 50px;
     margin-top: 100px;
+    margin-bottom: 70px;
     .order-left{
         width: 100%;
         max-width: max(30%,500px);
+        .title{
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 50px;
+        }
+        input{
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c5c5c5;
+            border-radius: 4px;
+            outline-color: tomato;
+        }
+        select{
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c5c5c5;
+            border-radius: 4px;
+            outline-color: tomato;
+            option{
+                width: 100%;
+                padding: 20px;
+            }
+        }
+        .multi-fields{
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+    }
+    .order-right{
+        width: 100%;
+        max-width: max(40%,500px);
+        .cartitems-total{
+            .cart-title{
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            }
+            button{
+                margin-top: 30px;
+                padding: 15px 50px;
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                background-color: red;
+                text-transform: uppercase;
+                font-weight: 500;
+            }
+            .cartitems-total-sub{
+                .cartitems-total-item{
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 30px;
+                }
+            }
+        }
     }
 }
