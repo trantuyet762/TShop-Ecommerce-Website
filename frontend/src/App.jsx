@@ -14,6 +14,10 @@ import women_banner from './Components/Assets/banner_women.png';
 import kid_banner from './Components/Assets/banner_kids.png';
 import Order from './Pages/Order';
 import OrderHistory from './Pages/OrderHistory';
+import Menus from './Pages/Menus';
+import News from './Pages/News';
+import Posts from './Pages/Posts';
+import Contact from './Pages/Contact';
 
 function App() {
   return (
@@ -22,10 +26,12 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path='/' element={<Shop/>}/>
-        <Route path='/mens' element={<ShopCategory banner={men_banner} category="men"/>}/>
-        <Route path='/womens' element={<ShopCategory banner={women_banner} category="women"/>}/>
-        <Route path='/kids' element={<ShopCategory banner={kid_banner} category="kid"/>}/>
-        <Route path='/mens' element={<ShopCategory/>}/>
+        <Route path='/news' element={<News/>}/>
+        <Route path='/posts' element={<Posts/>}/>
+        <Route path='/contact' element={<Contact/>}/>
+        
+        <Route path='/menus' element={<Menus/>}/>
+      
         <Route path='/product' element={<Product/>}>
           <Route path=':productId' element={<Product/>}/>
         </Route>

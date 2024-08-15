@@ -1,8 +1,15 @@
 import React from 'react'
 import './RelatedProducts.css';
-import data_product from '../Assets/data';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import Item from '../Item/Item';
 const RelatedProducts = () => {
+  const [relatedproduct, setRelatedProduct]= useState([]);
+  useEffect(()=>{
+    fetch('http://localhost:4000/relatedproduct')
+    .then((response)=>response.json())
+    .then((data)=>setNew_collection(data))
+  },[])
   return (
     <div className='relatedproducts'>
         <h1>Related Products</h1>

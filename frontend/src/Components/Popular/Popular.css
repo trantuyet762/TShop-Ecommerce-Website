@@ -4,11 +4,11 @@
     align-items: center;
     gap: 10px;
     height: 90px;
-    margin-bottom: 700px;
+    margin-bottom: 500px;
     h1{
         color: #171717 ;
         font-size: 50px;
-        font-weight: 600;
+        font-weight: 500;
     }
     hr{
         width: 200px;
@@ -26,7 +26,7 @@
 }
 @media(max-width:1280px){
     .popular{
-        margin-bottom: 500px;
+        margin-bottom: 300px;
         h1{
             font-size: 40px;
         }

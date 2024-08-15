@@ -18,22 +18,24 @@ const Navbar =()=>{
         
         <div className="navbar">
             <div className="nav-logo">
-                <img src={logo} alt=""/>
-                <p>TTSHOP</p>
+                
+                <p>TTSTORE</p>
             </div>
             <IoIosArrowDropdown className="nav-dropdown" onClick={dropdown_toggle} />
             <ul ref={menuRef} className="nav-menu">
-                <li onClick={()=>{setMenu("shop")}}><Link to='/'>Shop</Link>{menu==="shop" ? <hr/>:<></>} </li>
-                <li onClick={()=>{setMenu("mens")}}><Link to='/mens'>Men</Link>{menu==="mens" ? <hr/>:<></>}</li>
-                <li onClick={()=>{setMenu("womens")}}><Link to='womens'>Women</Link>{menu==="womens" ? <hr/>:<></>}</li>
-                <li onClick={()=>{setMenu("kids")}}><Link to='/kids'>Kids</Link>{menu==="kids" ? <hr/>:<></>}</li>
+                <li onClick={()=>{setMenu("shop")}}><Link to='/'>Trang chủ</Link>{menu==="shop" ? <hr/>:<></>} </li>
+                <li onClick={()=>{setMenu("menus")}}><Link to='/menus'>Menu</Link>{menu==="menus" ? <hr/>:<></>}</li>
+                <li onClick={()=>{setMenu("posts")}}><Link to='/posts'>Bài viết</Link>{menu==="posts" ? <hr/>:<></>}</li>
+                <li onClick={()=>{setMenu("news")}}><Link to='/news'>Tin tức</Link>{menu==="news" ? <hr/>:<></>}</li>
+                <li onClick={()=>{setMenu("contact")}}><Link to='/contact'>Liên hệ</Link>{menu==="contact" ? <hr/>:<></>}</li>
+
 
             </ul>
             <div className="nav-login-cart">
                 {localStorage.getItem('auth-token')?
                 <button onClick={()=>{localStorage.removeItem('auth-token');
-                window.location.replace('/')}}>Logout</button>
-                :<Link to={'/login'}><button>Login</button></Link>}
+                window.location.replace('/')}}>Đăng xuất</button>
+                :<Link to={'/login'}><button>Đăng nhập</button></Link>}
             
                 
                 <Link to='/cart'><img src={cart_icon} alt=""/></Link>

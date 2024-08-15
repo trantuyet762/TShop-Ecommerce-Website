@@ -1,18 +1,23 @@
 import React from 'react'
 import './Offers.css';
-import exclusive_image from '../Assets/exclusive_image.png';
+import slider from '../Assets/slider.png';
 export const Offers = () => {
   return (
     <div className='offers'>
-        <div className="offers-left">
-            <h1>Exclusive</h1>
-            <h1>Offers For You</h1>
-            <p>ONLY ON BEST SELLERS PRODUCTS </p>
-            <button>Check Now</button>
-        </div>
-        <div className="offers-right">
-                <img src={exclusive_image} alt=''/>
-        </div>
+            <div class="offers-img">
+                    <img src={slider} alt=""/>
+                
+            </div>
+            <div class="offers-content">
+                <h2>
+                 Deal hời Giá tốt
+                </h2>
+                <p>Giảm 20% mọi đơn hàng</p>
+                <p>Ưu đãi với số lượng có hạn!!</p>
+                <button>Đặt ngay</button>
+            </div>
+       
+            
     </div>
   )
 }

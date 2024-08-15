@@ -69,11 +69,13 @@ const Product= mongoose.model("Product",{
      }
 })
 app.post('/addproduct',async(req,res)=>{
+    if (!req.body.category || req.body.category.trim() === '') {
+        return res.status(400).json({ error: "Category is required and cannot be empty" });
+    }
     let products= await Product.find({});
-    let id;
+    let id =1;
         if(products.length>0){
-            let last_product_array= products.slice(-1);
-            let last_product= last_product_array[0];
+            let last_product = products[products.length - 1];
             id= last_product.id+1;
         }
         else{
@@ -194,10 +196,15 @@ app.get('/newcollections', async(req,res)=>{
     res.send(newcollection)
 })
 //
-app.get('/popularinwomen', async(req, res)=>{
-    let products= await Product.find({category:"women"});
+app.get('/relatedproduct', async(req,res)=>{
+    let products= await Product.find({});
+    let relatedproduct= products.slice(-4);
+    res.send(relatedproduct)
+})
+//
+app.get('/popular', async(req, res)=>{
+    let products= await Product.find({category:"cake"});
     let popular_in_women= products.slice(0,4);
-    console.log("Popular in women fetched ");
     res.send(popular_in_women);
 })
 

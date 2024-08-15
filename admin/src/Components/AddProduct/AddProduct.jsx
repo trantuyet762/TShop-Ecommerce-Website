@@ -46,7 +46,7 @@ const AddProduct = () => {
                 },
                 body: JSON.stringify(product),
             }).then((resp)=>resp.json()).then((data)=>{
-                data.success?alert("product Added"):alert("Failed")
+                data.success?alert("Thêm món thành công!"):alert("Thêm món thất bại!!!")
             })
         }
     }
@@ -54,25 +54,27 @@ const AddProduct = () => {
   return (
     <div className='add-product'>
         <div className="addproduct-itemfield">
-            <p>Product title</p>
+            <p>Tên món</p>
             <input type='text' value={productDetails.name} onChange={changeHandler} name='name' placeholder='Type here'/>
         </div>
         <div className="addproduct-price">
                 <div className="addproduct-itemfield">
-                    <p>Price</p>
+                    <p>Giá</p>
                     <input type='text' value={productDetails.old_price} onChange={changeHandler}  name='old_price' placeholder='Type here'/>
                 </div>
                 <div className="addproduct-itemfield">
-                    <p>Offer Price</p>
+                    <p>Giá khuyến mãi</p>
                     <input type='text' value={productDetails.new_price} onChange={changeHandler}  name='new_price' placeholder='Type here'/>
                 </div>
         </div>
         <div className="addproduct-itemfield">
-            <p>Product Category</p>
+            <p>Danh mục</p>
             <select value={productDetails.category} onChange={changeHandler}  name="category" className='add-product-selector'>
-                <option value="women">Women</option>
-                <option value="men">Men</option>
-                <option value="kid">Kid</option>
+                <option value="salad">Salad</option>
+                <option value="sandwich">Sandwich</option>
+                <option value="cake">Cake</option>
+                <option value="noodles">Noodles</option>
+                <option value="pasta">Pasta</option>
 
             </select>
         </div>
@@ -83,7 +85,7 @@ const AddProduct = () => {
             <input onChange={imageHandler} type='file' name="image" id="file-input" hidden/>
         </div>
         <button onClick={()=>{Add_Product()}} className="addproduct-btn">
-            ADD
+           Thêm mới
         </button>
     </div>
   )

@@ -32,34 +32,22 @@ const ProductDisplay = (props) => {
             </div>
             <div className="productdisplay-right-prices">
                 <div className="productdisplay-right-price-old">
-                    ${product.old_price}
+                    {product.old_price}
                 </div>
                 <div className="productdisplay-right-price-new">
-                    ${product.new_price}
+                    {product.new_price}
                 </div>
             </div>
             <div className="productdisplay-right-description">
-                A lightweight, usuallyknitted, pullover shirt, close-fitting and with a round neckline and short sleeves, worn as an undershirt or outer garment.
-            </div>
-            <div className="productdisplay-right-size">
-                <h1>Select Size</h1>
-                <div className="productdisplay-right-sizes">
-                <div>S</div>
-                <div>M</div>
-                <div>L</div>
-                <div>XL</div>
-                <div>XXL</div>
-                </div>
-            </div>
-            <button onClick={()=>{addToCart(product.id)}}>ADD TO CART</button>
+               Món ăn được chế biến từ các nguyên liệu riêng tạo ra hương vị đặc biệt cho từng món
+               </div>
+           
+            <button onClick={()=>{addToCart(product.id)}}>Thêm vào giỏ hàng</button>
             <p className='productdisplay-right-category'>
-                <span>Category: </span>
-                Women, T-Shirt, Croptop
+                <span>Danh mục món: </span>
+                {product.category}
             </p>
-            <p className='productdisplay-right-category'>
-                <span>Tags: </span>
-                Modern, Latest
-            </p>
+            
         </div>
 
     </div>
