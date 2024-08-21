@@ -1,4 +1,5 @@
 .new-collections{
+   
     margin-top: 100px;
     display: flex;
     flex-direction: column;
@@ -79,7 +80,7 @@
 }
 @media(max-width:500px){
     .new-collections{
-       
+       margin-top: 50px;
         h1{
             font-size: 20px;
         }
@@ -88,6 +89,7 @@
           
         }
         .collections{
+            width: 80%;
             gap: 5px;
             display: grid;
             grid-template-columns: 1fr 1fr;

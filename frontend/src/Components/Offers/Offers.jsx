@@ -4,10 +4,8 @@ import slider from '../Assets/slider.png';
 export const Offers = () => {
   return (
     <div className='offers'>
-            <div class="offers-img">
                     <img src={slider} alt=""/>
-                
-            </div>
+              
             <div class="offers-content">
                 <h2>
                  Deal hời Giá tốt

@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react" ;
 import './Navbar.css';
 import { FaUser } from "react-icons/fa";
-import logo from '../Assets/logo.png';
+import { IoMenu } from "react-icons/io5";
 import cart_icon from '../Assets/cart_icon.png';
 import { Link } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
@@ -21,7 +21,7 @@ const Navbar =()=>{
                 
                 <p>TTSTORE</p>
             </div>
-            <IoIosArrowDropdown className="nav-dropdown" onClick={dropdown_toggle} />
+            
             <ul ref={menuRef} className="nav-menu">
                 <li onClick={()=>{setMenu("shop")}}><Link to='/'>Trang chủ</Link>{menu==="shop" ? <hr/>:<></>} </li>
                 <li onClick={()=>{setMenu("menus")}}><Link to='/menus'>Menu</Link>{menu==="menus" ? <hr/>:<></>}</li>
@@ -45,7 +45,9 @@ const Navbar =()=>{
                     
             </div>
             </div>
-            
+            <div>
+            <IoMenu className="nav-dropdown" onClick={dropdown_toggle} />
+            </div>
         </div>
     )
 }

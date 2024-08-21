@@ -8,14 +8,14 @@ const RelatedProducts = () => {
   useEffect(()=>{
     fetch('http://localhost:4000/relatedproduct')
     .then((response)=>response.json())
-    .then((data)=>setNew_collection(data))
+    .then((data)=>setRelatedProduct(data))
   },[])
   return (
     <div className='relatedproducts'>
         <h1>Related Products</h1>
         <hr/>
         <div className="relatedproducts-item">
-            {data_product.map((item,i)=>{
+            {relatedproduct.map((item,i)=>{
                 return <Item key={i} id={item.id} name={item.name} image={item.image} new_price={item.new_price} old_price= {item.old_price}/>
             })}
         </div>

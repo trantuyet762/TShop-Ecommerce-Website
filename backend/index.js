@@ -370,15 +370,34 @@ app.put('/order/:id', async (req, res) => {
 });
 
 // xóa đơn hàng
-app.delete('/order/:id',  async (req, res) => {
+app.delete('/order/:id', fetchUser,  async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id);
-       
-        await order.remove();
-        res.json({ success: true, message: 'Đơn hàng đã được hủy.' });
-    } catch (error) {
-        res.status(500).json({ success: false, message: `Lỗi: ${error.message}` });
-    }
+        const orderId = req.params.id;
+        const userId = req.user.id;
+    
+        // Tìm đơn hàng theo id và kiểm tra xem đơn hàng có thuộc về người dùng không
+        const order = await Order.findOne({ _id: orderId, userId });
+    
+        if (!order) {
+          return res.status(404).json({ success: false, message: 'Order not found or unauthorized' });
+        }
+    
+        // Kiểm tra nếu đơn hàng đã vượt quá thời gian có thể hủy (2 phút)
+        const orderDate = new Date(order.date);
+        const now = new Date();
+        const timeDifference = Math.floor((now - orderDate) / 1000); // Thời gian chênh lệch tính theo giây
+    
+        if (timeDifference > 120) {
+          return res.status(400).json({ success: false, message: 'Cannot cancel order after 2 minutes' });
+        }
+    
+        // Xóa đơn hàng
+        await Order.deleteOne({ _id: orderId });
+    
+        res.status(200).json({ success: true, message: 'Order cancelled successfully' });
+      } catch (err) {
+        res.status(500).json({ success: false, message: 'Server error' });
+      }
 });
 
 

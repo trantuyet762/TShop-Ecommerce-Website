@@ -2,6 +2,9 @@ import React, { useContext, useState } from 'react'
 import { ShopContext } from '../Context/ShopContext';
 import './CSS/Order.scss';
 const Order = () => {
+  const formatNumber=(price)=>{
+    return new Intl.NumberFormat('de-DE').format(price);
+  }
     const { resetCart } = useContext(ShopContext);
     const {getTotalCartAmount}= useContext(ShopContext);
     const [name, setName] = useState('');
@@ -73,18 +76,18 @@ const Order = () => {
           <p className='cart-title'>Giỏ hàng</p>
           <div className="cartitems-total-sub">
             <div className="cartitems-total-item">
-              <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>Tổng tiền</p>
+              <p>{formatNumber(getTotalCartAmount())}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
-              <p>Shipping Fee</p>
-              <p>Free</p>
+              <p>Vận chuyển</p>
+              <p>Miễn phí</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
-              <h3>Total</h3>
-              <h3>${getTotalCartAmount()}</h3>
+              <h3>Tổng</h3>
+              <h3>{formatNumber(getTotalCartAmount())}</h3>
               </div>
           </div>
           <button type="button" onClick={handleOrder}>Thanh toán</button>

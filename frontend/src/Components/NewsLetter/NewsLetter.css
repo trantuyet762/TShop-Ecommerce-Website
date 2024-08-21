@@ -1,12 +1,12 @@
 .newsletter{
-    width: 65%;
+    width: 100%;
     height: 40vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: auto;
-    padding: 0 140px;
+    margin: 0px;
+   padding: 0px;
     margin-bottom: 150px;
     background: #ededed;
     gap: 30px;
@@ -51,7 +51,6 @@
 }
 @media(max-width:1280px){
     .newsletter{
-        padding: 0px 80px;
         margin-bottom: 120px;
         gap: 20px;
         h1{
@@ -126,6 +125,7 @@
 }
 @media(max-width:500px){
     .newsletter{
+        
         height:25vh;
         width: 100%;
         padding: 0;

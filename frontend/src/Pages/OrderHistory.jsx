@@ -3,7 +3,9 @@ import './CSS/OrderHistory.scss';
 
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
-
+  const formatNumber=(price)=>{
+    return new Intl.NumberFormat('de-DE').format(price);
+  }
   useEffect(() => {
     const token = localStorage.getItem('auth-token');
     
@@ -65,8 +67,8 @@ const OrderHistory = () => {
         orders.map((order) => {
           const orderDate = new Date(order.date);
           const now = new Date();
-          const timeDifference = Math.floor((now - orderDate) / 1000); // Time difference in seconds
-          const canCancel = timeDifference <= 120; // 120 seconds = 2 minutes
+          const timeDifference = Math.floor((now - orderDate) / 1000); 
+          const canCancel = timeDifference <= 1000; 
 
           return (
             <div key={order._id} className='order-history'>
@@ -94,13 +96,13 @@ const OrderHistory = () => {
                       <td>{index + 1}</td>
                       <td>{item.name}</td>
                       <td>{item.quantity}</td>
-                      <td>{item.price}</td>
-                      <td>{(item.quantity * item.price).toFixed(2)}</td>
+                      <td>{formatNumber(item.price)}</td>
+                      <td>{formatNumber((item.quantity * item.price).toFixed(2))}</td>
                     </tr>
                   ))}
                   <tr>
                     <th colSpan={4} className='item-table'>Tổng tiền </th>
-                    <th>{order.totalAmount.toFixed(2)}</th>
+                    <th>{formatNumber(order.totalAmount.toFixed(2))}</th>
                   </tr>
                 </tbody>
               </table>
